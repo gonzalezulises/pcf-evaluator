@@ -282,9 +282,9 @@ export function EvaluateWorkspace({ userRole }: { userRole: string }) {
         </div>
       </div>
 
-      <div className="flex-1 grid grid-cols-[300px_1fr_280px] gap-4 pt-4 overflow-hidden">
+      <div className="flex-1 grid grid-cols-1 lg:grid-cols-[300px_1fr_280px] gap-4 pt-4 overflow-hidden">
         {/* Left panel: Tree */}
-        <div className="overflow-y-auto border rounded-lg p-2">
+        <div className="overflow-y-auto border rounded-lg p-2 max-h-[300px] lg:max-h-none">
           {tree.map((node) => (
             <TreeItem
               key={node.entry.pcf_element_hierarchy_id}
@@ -472,7 +472,7 @@ export function EvaluateWorkspace({ userRole }: { userRole: string }) {
         </div>
 
         {/* Right panel: Context */}
-        <div className="overflow-y-auto border rounded-lg p-4 space-y-4">
+        <div className="hidden lg:block overflow-y-auto border rounded-lg p-4 space-y-4">
           <h3 className="font-semibold text-sm">Contexto</h3>
           {selected && (
             <>
