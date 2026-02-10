@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { ArrowLeft, Play, BarChart3, GitCompareArrows, Map } from 'lucide-react';
+import { ArrowLeft, Play, BarChart3, GitCompareArrows, Map, FileSearch } from 'lucide-react';
 import Link from 'next/link';
 import { EVALUATION_STATUS_LABELS, MATURITY_LABELS, MATURITY_COLORS } from '@/lib/constants';
 import type { EvaluationStatus, MaturityStatus } from '@/lib/constants';
@@ -145,11 +145,17 @@ export default async function EvaluationOverviewPage({
         </Card>
       )}
 
-      <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-5">
         <Button asChild size="lg" className="h-auto py-4 flex-col gap-2">
           <Link href={`/organizations/${orgId}/evaluations/${evalId}/evaluate`}>
             <Play className="h-5 w-5" />
             <span>{session!.user.role === 'viewer' ? 'Ver procesos' : 'Evaluar procesos'}</span>
+          </Link>
+        </Button>
+        <Button asChild variant="outline" size="lg" className="h-auto py-4 flex-col gap-2">
+          <Link href={`/organizations/${orgId}/evaluations/${evalId}/classify`}>
+            <FileSearch className="h-5 w-5" />
+            <span>Clasificar documento</span>
           </Link>
         </Button>
         <Button asChild variant="outline" size="lg" className="h-auto py-4 flex-col gap-2">
