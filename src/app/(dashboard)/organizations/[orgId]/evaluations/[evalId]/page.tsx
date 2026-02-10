@@ -149,7 +149,7 @@ export default async function EvaluationOverviewPage({
         <Button asChild size="lg" className="h-auto py-4 flex-col gap-2">
           <Link href={`/organizations/${orgId}/evaluations/${evalId}/evaluate`}>
             <Play className="h-5 w-5" />
-            <span>Evaluar procesos</span>
+            <span>{session!.user.role === 'viewer' ? 'Ver procesos' : 'Evaluar procesos'}</span>
           </Link>
         </Button>
         <Button asChild variant="outline" size="lg" className="h-auto py-4 flex-col gap-2">

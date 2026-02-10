@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Plus, ArrowLeft, ClipboardList } from 'lucide-react';
 import Link from 'next/link';
+import { OrgMembers } from '@/components/org-members';
 import { EVALUATION_STATUS_LABELS } from '@/lib/constants';
 import type { EvaluationStatus } from '@/lib/constants';
 
@@ -65,6 +66,8 @@ export default async function OrganizationDetailPage({
           </CardContent>
         </Card>
       )}
+
+      <OrgMembers orgId={orgId} readOnly={session!.user.role === 'viewer'} />
 
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold">Evaluaciones</h2>
