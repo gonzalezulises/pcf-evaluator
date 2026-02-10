@@ -25,19 +25,41 @@ src/
 │   ├── (dashboard)/      # Todo el dashboard (layout con sidebar)
 │   │   ├── organizations/
 │   │   │   └── [orgId]/evaluations/[evalId]/
-│   │   │       ├── evaluate/      # Workspace principal
+│   │   │       ├── evaluate/      # Workspace principal (page.tsx + workspace.tsx)
 │   │   │       ├── report/        # Dashboard con gráficos
 │   │   │       ├── gap-analysis/  # Análisis de brechas
 │   │   │       └── process-map/   # Mapa arquitectura APQC
 │   │   ├── admin/
-│   │   └── settings/
-│   └── api/              # API routes
-├── components/ui/        # shadcn/ui (auto-generados)
-├── lib/                  # DB, auth, utils
+│   │   │   ├── users/    # Gestión de usuarios (admin only)
+│   │   │   └── pcf/      # Navegador de datos PCF
+│   │   └── settings/     # Perfil + cambio de contraseña
+│   └── api/
+│       ├── auth/          # NextAuth + register
+│       ├── admin/users/   # CRUD usuarios (admin only)
+│       ├── organizations/ # CRUD orgs + members + evaluations
+│       ├── evaluations/   # entries, stats, pdf
+│       ├── evidence/      # upload/delete archivos (Vercel Blob)
+│       ├── pcf/           # browse/search datos PCF + métricas
+│       └── settings/      # actualizar perfil/password
+├── components/
+│   ├── ui/               # shadcn/ui (auto-generados)
+│   ├── charts/           # radar, bars, donut, heatmap
+│   ├── evidence-upload.tsx  # drag-and-drop upload
+│   └── org-members.tsx      # gestión equipo
+├── lib/                  # DB, auth, constants, utils, pdf-template
 └── hooks/
 data/                     # Excel APQC PCF
-scripts/                  # seed-pcf.ts
+scripts/                  # migrate.ts, seed-pcf.ts
 ```
+
+## Estado del proyecto
+
+Todas las fases (0-5) están implementadas y desplegadas en producción.
+
+### Rutas implementadas (31 total):
+- 2 auth pages (login, register)
+- 11 dashboard pages
+- 18 API routes
 
 ## Base de datos
 
