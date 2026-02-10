@@ -131,6 +131,13 @@ export default function ReportPage() {
           </Link>
         </Button>
         <h1 className="text-2xl font-bold flex-1">Reporte de evaluación</h1>
+        <Button
+          variant="outline"
+          onClick={() => window.open(`/api/evaluations/${evalId}/pdf`, '_blank')}
+        >
+          <Download className="mr-2 h-4 w-4" />
+          Exportar PDF
+        </Button>
       </div>
 
       {/* Summary cards */}
