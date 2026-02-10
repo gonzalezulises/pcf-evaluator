@@ -5,9 +5,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { Plus, ArrowLeft, ClipboardList } from 'lucide-react';
+import { Plus, ArrowLeft, ClipboardList, GitCompareArrows } from 'lucide-react';
 import Link from 'next/link';
 import { OrgMembers } from '@/components/org-members';
+import { MaturityTrend } from '@/components/charts/maturity-trend';
 import { EVALUATION_STATUS_LABELS } from '@/lib/constants';
 import type { EvaluationStatus } from '@/lib/constants';
 
@@ -69,16 +70,28 @@ export default async function OrganizationDetailPage({
 
       <OrgMembers orgId={orgId} readOnly={session!.user.role === 'viewer'} />
 
+      <MaturityTrend orgId={orgId} />
+
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold">Evaluaciones</h2>
-        {session!.user.role !== 'viewer' && (
-          <Button asChild>
-            <Link href={`/organizations/${orgId}/evaluations/new`}>
-              <Plus className="mr-2 h-4 w-4" />
-              Nueva evaluación
-            </Link>
-          </Button>
-        )}
+        <div className="flex gap-2">
+          {evaluations.length >= 2 && (
+            <Button variant="outline" asChild>
+              <Link href={`/organizations/${orgId}/compare`}>
+                <GitCompareArrows className="mr-2 h-4 w-4" />
+                Comparar
+              </Link>
+            </Button>
+          )}
+          {session!.user.role !== 'viewer' && (
+            <Button asChild>
+              <Link href={`/organizations/${orgId}/evaluations/new`}>
+                <Plus className="mr-2 h-4 w-4" />
+                Nueva evaluación
+              </Link>
+            </Button>
+          )}
+        </div>
       </div>
 
       {evaluations.length === 0 ? (

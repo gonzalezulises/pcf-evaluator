@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { hash } from 'bcryptjs';
 import { z } from 'zod';
 import { getDb } from '@/lib/db';
+import { rateLimitByIp } from '@/lib/rate-limit';
 
 const registerSchema = z.object({
   email: z.string().email('Email inválido'),
@@ -10,6 +11,11 @@ const registerSchema = z.object({
 });
 
 export async function POST(request: Request) {
+  const rl = rateLimitByIp(request, 'register', { limit: 5, windowMs: 60_000 });
+  if (!rl.success) {
+    return NextResponse.json({ error: 'Demasiados intentos. Intenta de nuevo en un minuto.' }, { status: 429 });
+  }
+
   try {
     const body = await request.json();
     const data = registerSchema.parse(body);

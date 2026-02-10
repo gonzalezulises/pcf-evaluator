@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { put } from '@vercel/blob';
 import { auth } from '@/lib/auth';
 import { getDb } from '@/lib/db';
+import { rateLimitByIp } from '@/lib/rate-limit';
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 const ALLOWED_TYPES = [
@@ -17,6 +18,11 @@ const ALLOWED_TYPES = [
 ];
 
 export async function POST(request: Request) {
+  const rl = rateLimitByIp(request, 'evidence-upload', { limit: 30, windowMs: 60_000 });
+  if (!rl.success) {
+    return NextResponse.json({ error: 'Demasiados archivos subidos. Intenta de nuevo en un minuto.' }, { status: 429 });
+  }
+
   const session = await auth();
   if (!session?.user) return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
   if (session.user.role === 'viewer') return NextResponse.json({ error: 'Sin permisos' }, { status: 403 });
